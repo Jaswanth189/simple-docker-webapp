@@ -15,6 +15,13 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            sh 'mvn sonar:sonar -Dsonar.projectKey=simple-docker-webapp'
+        }
+    }
+}
        stage('Docker Build on Remote Server') {
     steps {
         sh '''
