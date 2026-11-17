@@ -42,12 +42,10 @@ pipeline {
             }
         }
 stage('Docker Deployment') {
-    steps {
-        sh '''
-            ssh -i /var/lib/jenkins/.ssh/id_ed25519 \
-            -o StrictHostKeyChecking=no \
-            ubuntu@172.31.37.100 \
-            'sudo docker rm -f simple-webapp || true; sudo docker run -d --name simple-webapp --restart unless-stopped -p 8080:8080 simple-docker-webapp:latest'
-        '''
-    }
+    sh '''
+        ssh -i /var/lib/jenkins/.ssh/id_ed25519 \
+        -o StrictHostKeyChecking=no \
+        ubuntu@172.31.37.100 \
+        "sudo docker rm -f simple-webapp || true; sudo docker run -d --name simple-webapp --restart unless-stopped -p 8080:8080 simple-docker-webapp:latest"
+    '''
 }
